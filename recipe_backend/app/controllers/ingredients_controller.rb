@@ -1,26 +1,26 @@
 class IngredientsController < ApplicationController
     def index
-        @ingredients = Ingredient.all 
-        render json: @ingredients, status: 200
+        ingredients = Ingredient.all 
+        render json: IngredientSerializer.new(ingredients)
     end
     def show 
-        @ingredient = Ingredient.find(params[:id])
-        render json: @ingredient, status: 200
+        ingredient = Ingredient.find(params[:id])
+        render json: IngredientSerializer.new(ingredient)
     end
     def create 
         #binding.pry
-         @ingredient = Ingredient.new(ingredient_params)
-         @ingredient.save
-         render json: @ingredient, status: 200
+         recipe = Recipe.find(params[:recipe_id])
+         ingredient = recipe.ingredients.create(ingredient_params)
+         render json: IngredientSerializer.new(ingredient)
      end
      def update 
-         @ingredient = Ingredient.find(params[:id])
-         @ingredient.update(ingredient_params)
-         render json: @ingredient, status: 200
+         ingredient = Ingredient.find(params[:id])
+         ingredient.update(ingredient_params)
+         render json: IngredientSerializer.new(ingredient)
      end
      def destroy
-         @ingredient = Ingredient.find(params[:id]).destroy
-         render json: {ingredientId: @ingredient.id}
+         ingredient = Ingredient.find(params[:id]).destroy
+         render json: IngredientSerializer.new(ingredient)
      end
      private 
      def ingredient_params

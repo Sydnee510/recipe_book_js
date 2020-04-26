@@ -5,7 +5,10 @@ class IngredientsController < ApplicationController
     end
     def show 
         ingredient = Ingredient.find(params[:id])
-        render json: IngredientSerializer.new(ingredient)
+        options = {
+            include: [:recipe]
+        }
+        render json: IngredientSerializer.new(ingredient, options)
     end
     def create 
         #binding.pry

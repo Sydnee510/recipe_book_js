@@ -1,3 +1,3 @@
 class Recipe < ApplicationRecord
-    has many :ingredients
+    has_many :ingredients
 end

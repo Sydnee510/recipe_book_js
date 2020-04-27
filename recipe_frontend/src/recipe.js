@@ -38,6 +38,11 @@ class Recipe {
         };
         return new Ingredient(attributes);
     }
+    buildRecipe() {
+        
+        const main = document.createElement("main");
+        body.appendChild(main);
+    }
     updateList(ingredient) {
         let formData = {
             "name": ingredient.name,

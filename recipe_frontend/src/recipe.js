@@ -4,6 +4,8 @@ class Recipe {
         this.id = json.id;
         this.title = json.title;
         this.ingredients = this.createIngredients(json.ingredients);
+        this.adapter = new RecipesAdapter()
+        this.fetchAndLoadRecipes()
     }
 
     static create(title) {
@@ -90,4 +92,20 @@ class Recipe {
         let configObj = { method: "DELETE" };
         fetch(RECIPES_URL + "/" + this.id, configObj);
     }
+    fetchAndLoadRecipes(){
+        this.adapter.getRecipes().then(recipes => {
+            recipes.forEach(recipe => this.recipes.push(new Recipe(recipe)))
+            console.log(this.recipes)
+        })
+        .then(() => {
+            this.render()
+        })
+
+    }
+    renderLi(){
+        return `<li data-id=${this.id}>${this.title}, ${this.ingredients}</li>`
+    }
+    render() {
+        this.recipesContainer.innerHTML = this.recipes.map(recipe => recipe.renderLi()).join('')
+     }
 }
